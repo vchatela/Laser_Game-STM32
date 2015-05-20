@@ -1,0 +1,97 @@
+
+
+
+ARM Macro Assembler    Page 1 
+
+
+    1 00000000         ; ce programme est pour l'assembleur RealView (Keil)
+    2 00000000                 thumb
+    3 00000000                 area             moncode, code, readonly
+    4 00000000                 export           Sum_square
+    5 00000000                 extern           TabCos
+    6 00000000                 extern           TabSin
+    7 00000000         
+    8 00000000         Sum_square
+                               proc                         ; appelé par princi
+                                                            pal.c
+    9 00000000         ; on récupére l'origine de tabCos 
+   10 00000000 4905            ldr              r1, =TabCos
+   11 00000002         ; on récupère la valeur de tabcos + offset (r0)
+   12 00000002 F931 2010       ldrsh            r2, [r1, r0, LSL #1]
+   13 00000006         ; on la met au carre dans le registre résultat
+   14 00000006 FB02 F302       mul              r3, r2, r2
+   15 0000000A         ; Origine tabSin
+   16 0000000A 4904            ldr              r1, =TabSin
+   17 0000000C         ; val tabsin + offset
+   18 0000000C F931 2010       ldrsh            r2, [r1, r0, LSL #1]
+   19 00000010         ; on met au carre dans registre tempo
+   20 00000010 FB02 F002       mul              r0, r2, r2
+   21 00000014         ; on ajoute tempo au resultat précédent
+   22 00000014 4418            add              r0, r3
+   23 00000016         ; on retourne ca ds r0
+   24 00000016 4770    fin     bx               lr          ; dernière instruct
+                                                            ion de la fonction
+   25 00000018                 endp
+   26 00000018         ;
+   27 00000018                 END
+              00000000 
+              00000000 
+Command Line: --debug --xref --cpu=Cortex-M3 --apcs=interwork --depend=Tempo.d 
+-oTempo.o -IC:\Keil\ARM\RV31\INC -IC:\Keil\ARM\CMSIS\Include -IC:\Keil\ARM\Inc\
+ST\STM32F10x --predefine="__EVAL SETA 1" --predefine="__MICROLIB SETA 1" --list
+=.\Tempo.lst Sources\Tempo.s
+
+
+
+ARM Macro Assembler    Page 1 Alphabetic symbol ordering
+Relocatable symbols
+
+Sum_square 00000000
+
+Symbol: Sum_square
+   Definitions
+      At line 8 in file Sources\Tempo.s
+   Uses
+      At line 4 in file Sources\Tempo.s
+Comment: Sum_square used once
+fin 00000016
+
+Symbol: fin
+   Definitions
+      At line 24 in file Sources\Tempo.s
+   Uses
+      None
+Comment: fin unused
+moncode 00000000
+
+Symbol: moncode
+   Definitions
+      At line 3 in file Sources\Tempo.s
+   Uses
+      None
+Comment: moncode unused
+3 symbols
+
+
+
+ARM Macro Assembler    Page 1 Alphabetic symbol ordering
+External symbols
+
+TabCos 00000000
+
+Symbol: TabCos
+   Definitions
+      At line 5 in file Sources\Tempo.s
+   Uses
+      At line 10 in file Sources\Tempo.s
+Comment: TabCos used once
+TabSin 00000000
+
+Symbol: TabSin
+   Definitions
+      At line 6 in file Sources\Tempo.s
+   Uses
+      At line 16 in file Sources\Tempo.s
+Comment: TabSin used once
+2 symbols
+339 symbols in table

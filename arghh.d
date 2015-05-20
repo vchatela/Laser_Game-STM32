@@ -1,0 +1,1 @@
+.\arghh.o: ..\arghh.asm

@@ -1,0 +1,30 @@
+*** Creating Trace Output File 'Proj_Step_1.tra' Ok.
+### Preparing for ADS-LD.
+### Creating ADS-LD Command Line
+### List of Objects: adding '"principal.o"'
+### List of Objects: adding '"tempo.o"'
+### List of Objects: adding '".\trigo.o"'
+### List of Objects: adding '"signal.o"'
+### List of Objects: adding '"reel.o"'
+### List of Objects: adding '"t04f17p60.o"'
+### List of Objects: adding '"tempo son.o"'
+### List of Objects: adding '"bruitverre.o"'
+### List of Objects: adding '".\arghh.o"'
+### List of Objects: adding '".\Lib\gassp72.lib"'
+### List of Objects: adding '".\Sources\Affichage_Valise.o"'
+### List of Objects: adding '"startup-rvds.o"'
+### ADS-LD Command completed:
+--cpu Cortex-M3 "principal.o" "tempo.o" ".\trigo.o" "signal.o" "reel.o" "t04f17p60.o" "tempo son.o" "bruitverre.o" ".\arghh.o" "U:\3 MIC\S2\BE Inté\Projet\Projet_Step_4\Lib\gassp72.lib" ".\Sources\Affichage_Valise.o" "startup-rvds.o" 
+--library_type=microlib --ro-base 0x08000000 --entry 0x08000000 --rw-base 0x20000000 --entry Reset_Handler --first __Vectors --strict --summary_stderr --info summarysizes --map --xref --callgraph --symbols 
+--info sizes --info totals --info unused --info veneers 
+ --list ".\Proj_Step_1.map" -o Proj_Step_1.axf### Preparing Environment (PrepEnvAds)
+### ADS-LD Output File: 'Proj_Step_1.axf'
+### ADS-LD Command File: 'Proj_Step_1.lnp'
+### Checking for dirty Components...
+### Creating CmdFile 'Proj_Step_1.lnp', Handle=0x00000DD4
+### Writing '.lnp' file
+### ADS-LD Command file 'Proj_Step_1.lnp' is ready.
+### ADS-LD: About to start ADS-LD Thread.
+### ADS-LD: executed with 0 errors
+### Updating obj list
+### LDADS_file() completed.

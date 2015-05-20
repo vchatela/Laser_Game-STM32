@@ -1,0 +1,71 @@
+
+
+
+ARM Macro Assembler    Page 1 
+
+
+    1 00000000                 AREA             DonneeSon, DATA, READONLY
+    2 00000000                 export           LongueurSon
+    3 00000000                 export           PeriodeSonMicroSec
+    4 00000000                 export           Son
+    5 00000000 00000006 
+                       LongueurSon
+                               DCD              6
+    6 00000004 0000005B 
+                       PeriodeSonMicroSec
+                               DCD              91
+    7 00000008 00 00   Son     dcw              0
+    8 0000000A 01 00           dcw              1           ; plus petite valeu
+                                                            r positive
+    9 0000000C FF FF           dcw              -1          ; plus petite valeu
+                                                            r négative
+   10 0000000E FF 7F           dcw              32767       ; plus grande valeu
+                                                            r positive
+   11 00000010 00 80           dcw              -32768      ; plus grande valeu
+                                                            r négative
+   12 00000012 00 00           dcw              0
+                       
+Command Line: --debug --xref --cpu=Cortex-M3 --apcs=interwork --depend=test.d -
+otest.o -IC:\Keil\ARM\RV31\INC -IC:\Keil\ARM\CMSIS\Include -IC:\Keil\ARM\Inc\ST
+\STM32F10x --predefine="__EVAL SETA 1" --predefine="__MICROLIB SETA 1" --list=t
+est.lst test.asm
+
+
+
+ARM Macro Assembler    Page 1 Alphabetic symbol ordering
+Relocatable symbols
+
+DonneeSon 00000000
+
+Symbol: DonneeSon
+   Definitions
+      At line 1 in file test.asm
+   Uses
+      None
+Comment: DonneeSon unused
+LongueurSon 00000000
+
+Symbol: LongueurSon
+   Definitions
+      At line 5 in file test.asm
+   Uses
+      At line 2 in file test.asm
+Comment: LongueurSon used once
+PeriodeSonMicroSec 00000004
+
+Symbol: PeriodeSonMicroSec
+   Definitions
+      At line 6 in file test.asm
+   Uses
+      At line 3 in file test.asm
+Comment: PeriodeSonMicroSec used once
+Son 00000008
+
+Symbol: Son
+   Definitions
+      At line 7 in file test.asm
+   Uses
+      At line 4 in file test.asm
+Comment: Son used once
+4 symbols
+336 symbols in table

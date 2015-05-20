@@ -1,0 +1,232 @@
+
+
+
+ARM Macro Assembler    Page 1 
+
+
+    1 00000000         ; ce programme est pour l'assembleur RealView (Keil)
+    2 00000000                 thumb
+    3 00000000                 area             moncode, code, readonly
+    4 00000000                 export           son_callback
+    5 00000000                 include          ../etat.inc
+    1 00000000         ;typedef struct {
+    2 00000000         ;int position;  // 0
+    3 00000000         ;int taille;  // 4
+    4 00000000         ;void * son;  // 8
+    5 00000000         ;int resolution; // 12
+    6 00000000         ;int periode_ticks; // 16
+    7 00000000         ;} type_etat;
+    8 00000000         
+    9 00000000         ;/*
+   10 00000000 00000000 
+                       E_POS   equ              0
+   11 00000000 00000004 
+                       E_TAI   equ              4
+   12 00000000 00000008 
+                       E_SON   equ              8
+   13 00000000 0000000C 
+                       E_RES   equ              12
+   14 00000000 00000010 
+                       E_PER   equ              16
+   15 00000000                 end
+    6 00000000                 extern           etat
+    7 00000000         
+    8 00000000 4000043C 
+                       TIM3_CCR3
+                               equ              0x4000043C  ; adresse registre 
+                                                            PWM
+    9 00000000         ;
+   10 00000000         
+   11 00000000         son_callback
+                               proc                         ; appelé par princi
+                                                            pal.c
+   12 00000000         ; on récupere la valeur (son + [index*2]), index car tab
+                       leau
+   13 00000000 480F            ldr              r0, =etat   ;@ début struct
+   14 00000002 6881            ldr              r1, [r0, #E_SON] 
+                                                            ;r1 = debut son
+   15 00000004 6802            ldr              r2, [r0, #E_POS] 
+                                                            ;r2=valeur position
+                                                            
+   16 00000006         ; on verifie que position dépasse pas longeurmax
+   17 00000006 6843            ldr              r3, [r0, #E_TAI] ; r3 = taille
+   18 00000008 1A9B            subs             r3, r2      ; on fait r3 = posi
+                                                            tion - longeur max 
+                                                               ON met le S pour
+                                                             maj des flags !!!!
+                                                            !!
+   19 0000000A D010            BEQ              onenvoi0    ; si Z est vrai alo
+                                                            rs on a dépassé don
+                                                            c on va a onenvoi0
+   20 0000000C         ; on a bien du son a recupérer
+   21 0000000C F931 1012       ldrsh            r1, [r1, r2, LSL #1] ;récupéré 
+                                                            valeur du son : LSL
+                                                             #1 permet de multi
+                                                            plier r2 par 2
+
+
+
+ARM Macro Assembler    Page 2 
+
+
+   22 00000010         ; on traite notre valeur entre décalage et tout et tout 
+                       
+   23 00000010         
+   24 00000010         ; (val + 2^15)*etatresolution / 2^16    or val = r1
+   25 00000010 F501 4100       add              r1, #(1<<15) ; val + 2^15
+   26 00000014         ; on récupère etatresolution
+   27 00000014 68C3            ldr              r3, [r0, #E_RES]
+   28 00000016         ; on multiplie par etat resolution
+   29 00000016 FB01 F103       mul              r1, r1, r3  ; r1 = r1 * r3
+   30 0000001A         ; decallage a droite de 16 ( div par 2^16)
+   31 0000001A EA4F 4111       lsr              r1, r1, #16 ; ici on a la valeu
+                                                            r finale (ds r1) a 
+                                                            transmettre au [TIM
+                                                            3_CCR3]
+   32 0000001E         
+   33 0000001E F8DF C024       ldr              r12, =TIM3_CCR3 ; car accès dir
+                                                            ect impossible
+   34 00000022 F8CC 1000       str              r1, [r12]   ; on transmet r1 au
+                                                             registre    
+   35 00000026 F102 0201       add              r2, #1      ; add de 2octets po
+                                                            ur incrementer l'in
+                                                            dex / offset
+   36 0000002A 6002            str              r2, [r0, #E_POS] ; on ecrit la 
+                                                            nouvelle valeur
+   37 0000002C E006            B                fin
+   38 0000002E         ; r1 = etatresolution/2
+   39 0000002E         onenvoi0
+   40 0000002E 68C1            ldr              r1, [r0, #E_RES]
+   41 00000030 EA4F 0151       lsr              r1, r1, #1  ; r1 = r1/2 = etat_
+                                                            resol / 2 qui corre
+                                                            spond a 0 en signal
+                                                             son
+   42 00000034 F8DF C00C       ldr              r12, =TIM3_CCR3 ; car accès dir
+                                                            ect impossible
+   43 00000038 F8CC 1000       str              r1, [r12]   ; on transmet r1 au
+                                                             registre
+   44 0000003C         
+   45 0000003C 4770    fin     bx               lr          ; dernière instruct
+                                                            ion de la fonction
+   46 0000003E                 endp
+   47 0000003E         ;
+   48 0000003E                 end
+              00 00 00000000 
+              4000043C 
+Command Line: --debug --xref --cpu=Cortex-M3 --apcs=interwork --depend="Tempo s
+on.d" -o"Tempo son.o" -IC:\Keil\ARM\RV31\INC -IC:\Keil\ARM\CMSIS\Include -IC:\K
+eil\ARM\Inc\ST\STM32F10x --predefine="__EVAL SETA 1" --predefine="__MICROLIB SE
+TA 1" --list=.\Tempo son.lst "Sources\Tempo son.s"
+
+
+
+ARM Macro Assembler    Page 1 Alphabetic symbol ordering
+Relocatable symbols
+
+fin 0000003C
+
+Symbol: fin
+   Definitions
+      At line 45 in file Sources\Tempo
+   Uses
+      At line 37 in file Sources\Tempo
+Comment: fin used once
+moncode 00000000
+
+Symbol: moncode
+   Definitions
+      At line 3 in file Sources\Tempo
+   Uses
+      None
+Comment: moncode unused
+onenvoi0 0000002E
+
+Symbol: onenvoi0
+   Definitions
+      At line 39 in file Sources\Tempo
+   Uses
+      At line 19 in file Sources\Tempo
+Comment: onenvoi0 used once
+son_callback 00000000
+
+Symbol: son_callback
+   Definitions
+      At line 11 in file Sources\Tempo
+   Uses
+      At line 4 in file Sources\Tempo
+Comment: son_callback used once
+4 symbols
+
+
+
+ARM Macro Assembler    Page 1 Alphabetic symbol ordering
+Absolute symbols
+
+E_PER 00000010
+
+Symbol: E_PER
+   Definitions
+      At line 14 in file Sources\..\etat.inc
+   Uses
+      None
+Comment: E_PER unused
+E_POS 00000000
+
+Symbol: E_POS
+   Definitions
+      At line 10 in file Sources\..\etat.inc
+   Uses
+      At line 15 in file Sources\Tempo
+      At line 36 in file Sources\Tempo
+
+E_RES 0000000C
+
+Symbol: E_RES
+   Definitions
+      At line 13 in file Sources\..\etat.inc
+   Uses
+      At line 27 in file Sources\Tempo
+      At line 40 in file Sources\Tempo
+
+E_SON 00000008
+
+Symbol: E_SON
+   Definitions
+      At line 12 in file Sources\..\etat.inc
+   Uses
+      At line 14 in file Sources\Tempo
+Comment: E_SON used once
+E_TAI 00000004
+
+Symbol: E_TAI
+   Definitions
+      At line 11 in file Sources\..\etat.inc
+   Uses
+      At line 17 in file Sources\Tempo
+Comment: E_TAI used once
+TIM3_CCR3 4000043C
+
+Symbol: TIM3_CCR3
+   Definitions
+      At line 8 in file Sources\Tempo
+   Uses
+      At line 33 in file Sources\Tempo
+      At line 42 in file Sources\Tempo
+
+6 symbols
+
+
+
+ARM Macro Assembler    Page 1 Alphabetic symbol ordering
+External symbols
+
+etat 00000000
+
+Symbol: etat
+   Definitions
+      At line 6 in file Sources\Tempo
+   Uses
+      At line 13 in file Sources\Tempo
+Comment: etat used once
+1 symbol
+345 symbols in table

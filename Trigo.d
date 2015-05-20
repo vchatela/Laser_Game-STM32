@@ -1,0 +1,1 @@
+.\Trigo.o: ..\..\Trigo.asm

@@ -1,0 +1,5 @@
+--cpu Cortex-M3 --pd "__EVAL SETA 1" -g --apcs=interwork --pd "__MICROLIB SETA 1" 
+-I C:\Keil\ARM\RV31\INC 
+-I C:\Keil\ARM\CMSIS\Include 
+-I C:\Keil\ARM\Inc\ST\STM32F10x 
+--list ".\startup-rvds.lst" --xref -o "startup-rvds.o" --depend "startup-rvds.d" "Systeme\startup-rvds.s"

@@ -1,0 +1,12 @@
+Dependencies for Project 'Proj_Step_1', Target 'Cible_STM103': (DO NOT MODIFY !)
+F (.\Sources\principal.c)(0x53021461)(-c --cpu Cortex-M3 -D__EVAL -D__MICROLIB -g -O0 --apcs=interwork -I.\Lib -I C:\Keil\ARM\RV31\INC -I C:\Keil\ARM\CMSIS\Include -I C:\Keil\ARM\Inc\ST\STM32F10x -o "principal.o" --omf_browse "principal.crf" --depend "principal.d")
+I (.\Lib\gassp72.h)(0x511E175B)
+I (C:\Keil\ARM\Inc\ST\STM32F10x\stm32f10x.h)(0x524BD99C)
+I (C:\Keil\ARM\CMSIS\Include\core_cm3.h)(0x5087A1CE)
+I (C:\Keil\ARM\ARMCC\bin\..\include\stdint.h)(0x50F9B5B0)
+I (C:\Keil\ARM\CMSIS\Include\core_cmInstr.h)(0x5087A1CE)
+I (C:\Keil\ARM\CMSIS\Include\core_cmFunc.h)(0x5087A1CE)
+I (C:\Keil\ARM\Inc\ST\STM32F10x\system_stm32f10x.h)(0x5087A008)
+F (.\Sources\Tempo.s)(0x530212B9)(--cpu Cortex-M3 --pd "__EVAL SETA 1" -g --apcs=interwork --pd "__MICROLIB SETA 1" -I C:\Keil\ARM\RV31\INC -I C:\Keil\ARM\CMSIS\Include -I C:\Keil\ARM\Inc\ST\STM32F10x --list ".\Tempo.lst" --xref -o "Tempo.o" --depend "Tempo.d")
+F (.\Lib\gassp72.lib)(0x511E0AED)()
+F (.\Systeme\STM32F10x.s)(0x4F51D186)(--cpu Cortex-M3 --pd "__EVAL SETA 1" -g --apcs=interwork --pd "__MICROLIB SETA 1" -I C:\Keil\ARM\RV31\INC -I C:\Keil\ARM\CMSIS\Include -I C:\Keil\ARM\Inc\ST\STM32F10x --list ".\STM32F10x.lst" --xref -o "STM32F10x.o" --depend "STM32F10x.d")
